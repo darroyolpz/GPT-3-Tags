@@ -1,1 +1,1 @@
-# GPT-3-Tags
+# GPT-3 Tags
