@@ -10,7 +10,7 @@ database = os.getenv('DATABASE')
 #Variables
 count = 0
 
-#Function makes a request to get a list the AHU's
+#Function makes a request to get a listed the AHU's without filters we only get the last 100 AHU's
 def listUnits(tokenNotion, database):
 
     url = f"https://api.notion.com/v1/databases/{database}/query"
@@ -48,6 +48,6 @@ for data in jsonResponse['results']:
     
     count = count + 1
         
-    print(f'''[{count}] Order: {dataOrder} >> Model: {dataOrder} >> Date: {dataModelAHU}''')
+    print(f'''[{count}] Order: {dataOrder} >> Model: {dataModelAHU} >> Date: {dateFinal}''')
 
 
