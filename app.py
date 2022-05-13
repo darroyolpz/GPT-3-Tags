@@ -25,6 +25,20 @@ def listUnits(tokenNotion, database):
 
     return(response.text)
 
+def listToDo(tokenNotion, id):
+    
+    url = f"https://api.notion.com/v1/blocks/{id}/children?page_size=100"
+
+    payload = {}
+    headers = {
+        'Notion-Version': '2021-05-13',
+        'Authorization': tokenNotion
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return json.loads(response.text)
+
 listResponse = listUnits(tokenNotion= tokenNotion, database= database)
 jsonResponse = json.loads(listResponse)
 
@@ -33,7 +47,7 @@ for data in jsonResponse['results']:
     jsonDate = data["created_time"]
     date2 = jsonDate.split("T")[0].split("-")
     dateFinal = "/".join(reversed(date2))
-    
+        
     jsonProperties = data['properties']
     jsonOrder = jsonProperties['Pedido']
     jsonOrderTitle = jsonOrder['title']
@@ -49,5 +63,10 @@ for data in jsonResponse['results']:
     count = count + 1
         
     print(f'''[{count}] Order: {dataOrder} >> Model: {dataModelAHU} >> Date: {dateFinal}''')
+    
+    todoList = listToDo(tokenNotion=tokenNotion, id=jsonId)
+    
+    print(todoList)
+
 
 
