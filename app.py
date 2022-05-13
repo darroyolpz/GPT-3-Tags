@@ -23,7 +23,7 @@ def listUnits(tokenNotion, database):
 
     response = requests.request("POST", url, headers=headers)
 
-    return(response.text)
+    return response.text
 
 def listToDo(tokenNotion, id):
     
@@ -37,7 +37,7 @@ def listToDo(tokenNotion, id):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    return json.loads(response.text)
+    return response.text
 
 listResponse = listUnits(tokenNotion= tokenNotion, database= database)
 jsonResponse = json.loads(listResponse)
@@ -62,11 +62,20 @@ for data in jsonResponse['results']:
     
     count = count + 1
         
-    print(f'''[{count}] Order: {dataOrder} >> Model: {dataModelAHU} >> Date: {dateFinal}''')
+    print(f'''<<<<< Order: {dataOrder} >> Model: {dataModelAHU} >> Date: {dateFinal} >>>>>''')
     
     todoList = listToDo(tokenNotion=tokenNotion, id=jsonId)
+    todoListJson = json.loads(todoList)
     
-    print(todoList)
+    for dataList in todoListJson['results']:
+        dataToDo = dataList['to_do']
+        dataText = dataToDo['text'][0]
+        dataText2 = dataText['text']
+        dataContent = dataText2['content']
+        print(f'    [] {dataContent}')
+        
+    
+    
 
 
 
