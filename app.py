@@ -62,17 +62,18 @@ for data in jsonResponse['results']:
     
     count = count + 1
         
-    print(f'''<<<<< Order: {dataOrder} >> Model: {dataModelAHU} >> Date: {dateFinal} >>>>>''')
+    print(f'''\n<<<<< Order: {dataOrder} || Model: {dataModelAHU} || Date: {dateFinal} >>>>>''')
     
     todoList = listToDo(tokenNotion=tokenNotion, id=jsonId)
     todoListJson = json.loads(todoList)
     
     for dataList in todoListJson['results']:
-        dataToDo = dataList['to_do']
-        dataText = dataToDo['text'][0]
-        dataText2 = dataText['text']
-        dataContent = dataText2['content']
-        print(f'    [] {dataContent}')
+        if dataList['type'] == ('to_do'):
+            dataToDo = dataList['to_do']
+            dataText = dataToDo['text'][0]
+            dataText2 = dataText['plain_text']
+            #dataContent = dataText2['content']
+            print(f'    [] {dataText2}')
         
     
     
